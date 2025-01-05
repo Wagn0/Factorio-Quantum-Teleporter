@@ -1,2 +1,2 @@
-# Factorio-Mod-Template
-Este e um template desenvolvido por luis das artimanhas, que tem como objetivo, fazer um template ou padronizar a criação dos arquivos de mod.
+# Factorio-Qauntum-Teleporter
+Objetivo desse mod para o jogo factorio e teleportar o jogador para qualquer lugar do mapa e dos planetas da dlc space age
