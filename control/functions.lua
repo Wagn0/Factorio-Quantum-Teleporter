@@ -1,21 +1,50 @@
+function Teleport_to_planet(player, surface_name)
+    -- Verifica se a superfície de destino existe
+    local destination_surface = game.surfaces[surface_name]
+    if destination_surface then
+        -- Escolhe uma posição na superfície de destino para teletransportar o jogador
+        local destination_position = {x = 0, y = 0} -- Posição que você deseja no novo planeta (modifique conforme necessário)
 
-
-local function create_input_window()
-    local flow = player.gui.screen.add({type = "flow", direction = "vertical", name = "teleport_window"})
-
-    flow.add({type = "label", caption = "Digite o nome da superfície para teletransporte:"})
-    flow.add({type = "textfield", name = "surface_name", text = ""})
-
-    flow.add({type = "label", caption = "Digite a coordenada X:"})
-    flow.add({type = "textfield", name = "coord_x", text = "0"})
-
-    flow.add({type = "label", caption = "Digite a coordenada Y:"})
-    flow.add({type = "textfield", name = "coord_y", text = "0"})
-
-    flow.add({type = "button", name = "confirm_button", caption = "Teletransportar"})
+        -- Teleporta o jogador
+        player.teleport(destination_position, destination_surface)
+        game.print(player.name .. " foi teletransportado para " .. surface_name)
+    else
+        game.print("Superfície " .. surface_name .. " não encontrada!")
+    end
 end
 
-local function handle_teleport_request(event)
+function Teleport_to_planet_with_cords(player, surface_name, x, y)
+    -- Verifica se a superfície de destino existe
+    local destination_surface = game.surfaces[surface_name]
+    if destination_surface then
+        -- Escolhe uma posição na superfície de destino para teletransportar o jogador
+        local destination_position = {x = x, y = y} -- Posição que você deseja no novo planeta (modifique conforme necessário)
+
+        -- Teleporta o jogador
+        player.teleport(destination_position, destination_surface)
+        game.print(
+            player.name ..
+                " foi teletransportado para " .. surface_name .. " nas coordenadas " .. x .. ", " .. y
+        )
+    else
+        game.print("Superfície " .. surface_name .. " não encontrada!")
+    end
+end
+
+-- Função para processar a entrada do jogador
+function Handle_teleport_planet(event)
+    local player = game.players[event.player_index]
+    local element = event.element
+
+    if element.name == "confirm_button" then
+        local surface_name = player.gui.screen.teleport_window.surface_name.text -- Obtém o nome da superfície
+        Teleport_to_planet(player, surface_name)
+        -- Fecha a janela após o teletransporte
+        player.gui.screen.teleport_window.destroy()
+    end
+end
+
+function Handle_teleport_cords(event)
     local player = game.players[event.player_index]
     local element = event.element
 
@@ -26,14 +55,9 @@ local function handle_teleport_request(event)
 
         local destination_surface = game.surfaces[surface_name]
 
-        if destination_surface then
-            local destination_position = {x = coord_x, y = coord_y}
-            player.teleport(destination_position, destination_surface)
-            game.print(player.name .. " foi teletransportado para " .. surface_name .. " nas coordenadas " .. coord_x .. ", " .. coord_y)
-
-            player.gui.screen.teleport_window.destroy()
-        else
-            game.print("Superfície " .. surface_name .. " não encontrada!")
-        end
+        Teleport_to_planet_with_cords(player, destination_surface, coord_x, coord_y)
+    elseif element.name == "close_button" then
+        -- Fecha a janela ao clicar no botão "X"
+        player.gui.screen.teleport_window.destroy()
     end
 end

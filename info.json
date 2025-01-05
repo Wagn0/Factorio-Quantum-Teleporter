@@ -1,16 +1,15 @@
 {
-    "name": "MOD-name",
+    "name": "Quantum-Portal",
     "version": "0.0.1",
-    "title": "MOD name",
-    "author": "AUTHOR",
+    "title": "Quantum Portal",
+    "author": "LUIS DAS ARTIMANAHS",
     "contact": "example@gmail.com",
     "homepage": "https://github.com/LUISDASARTIMANHAS",
-    "description": "MOD description.",
-    "factorio_version": "1.1",
+    "description": "Objetivo desse mod para o jogo factorio e teleportar o jogador para qualquer lugar do mapa e dos planetas da dlc space age.",
+    "factorio_version": "2.0",
     "dependencies": [
-        "base",
-        "flib",
-        "stdlib"
+        "base >= 2.0.0",
+        "space-age"
     ],
     "license": "GNU General Public License v3.0",
     "thumbnail": "thumbnail.png"
