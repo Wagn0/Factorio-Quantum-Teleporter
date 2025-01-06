@@ -45,19 +45,71 @@ end
 
 -- Evento para detectar o clique nos botões
 script.on_event(defines.events.on_gui_click, Handle_teleport_cords)
+
+-- cria a janela quando o player crafita algo
 script.on_event(
     defines.events.on_player_crafted_item,
     function(event)
         local player = game.players[event.player_index]
+        if not player then
+            game.print("ERROR FATAL! REPORT TO DEVELOPER")
+            return
+        end
 
-        create_input_window(player)
+        local item_stack = event.item_stack
+        if item_stack and item_stack.valid and item_stack.name == "quantum-teleporter-equipment" then
+            create_input_window(player)
+        end
     end
 )
+
+script.on_event(
+    defines.events.on_player_used_equipment,
+    function(event)
+        local player = game.get_player(event.player_index)
+        if not player then
+            game.print("ERROR FATAL! REPORT TO DEVELOPER")
+            return
+        end
+
+        local equipment = event.equipment
+        if equipment.name == "quantum-teleporter-equipment" then
+                create_input_window(player)
+        end
+    end
+)
+
+-- REMOÇÃO DA JANELA DE TELEPORTE
+
+-- Evento para lidar com a remoção de equipamento
+script.on_event(
+    defines.events.on_player_removed_equipment,
+    function(event)
+        local player = game.get_player(event.player_index)
+        if not player then
+            game.print("ERROR FATAL! REPORT TO DEVELOPER")
+            return
+        end
+
+        -- Verifica se o equipamento removido é o "quantum-teleporter-equipment"
+        if event.equipment == "quantum-teleporter-equipment" then
+            -- Fecha a janela de teletransporte se ela estiver aberta
+            if player.gui.screen.teleport_window then
+                player.gui.screen.teleport_window.destroy()
+            end
+        end
+    end
+)
+
 -- destroi a janela quando o player morre
 script.on_event(
     defines.events.on_player_died,
     function(event)
         local player = game.players[event.player_index]
+        if not player then
+            game.print("ERROR FATAL! REPORT TO DEVELOPER")
+            return
+        end
 
         player.gui.screen.teleport_window.destroy()
     end
