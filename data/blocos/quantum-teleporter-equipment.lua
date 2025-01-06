@@ -2,16 +2,6 @@ local path_main = "__Quantum-Teleporter__/"
 
 data:extend({
     {
-        type = "item",
-        name = "quantum-teleporter-equipment",
-        icon = path_main .. "graficos/itens/quantum-teleporter-equipment.png",
-        icon_size = 128,
-        placed_as_equipment_result = "quantum-teleporter-equipment",
-        subgroup = "equipment",
-        order = "b[personal-transport]-a[quantum-teleporter-equipment]",
-        stack_size = 1
-    },
-    {
         type = "movement-bonus-equipment", -- Tipo específico para modificar movimentação
         name = "quantum-teleporter-equipment",
         sprite = {
