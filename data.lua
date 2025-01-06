@@ -1,9 +1,9 @@
 -- presets Basicos do mods
 require("graficos/style.lua")
-require("soundMaker")
-require("grupos")
-require("recursos")
+require("data/soundMaker")
+require("data/grupos")
+require("data/recursos")
 
 -- blocos e qeuipamentos
-require("blocos.quantum-teleporter-equipment")
-require("data.blocos.quantum-teleporter-portal-entidade")
+require("data/blocos/quantum-teleporter-equipment")
+require("data/blocos/quantum-teleporter-portal-entidade")
