@@ -39,8 +39,8 @@ function Handle_teleport_planet(event)
     if element.name == "confirm_button" then
         local surface_name = player.gui.screen.teleport_window.surface_name.text -- Obtém o nome da superfície
         Teleport_to_planet(player, surface_name)
-        -- Fecha a janela após o teletransporte
-        player.gui.screen.teleport_window.destroy()
+        -- -- Fecha a janela após o teletransporte
+        -- player.gui.screen.teleport_window.destroy()
     end
 end
 
@@ -56,8 +56,8 @@ function Handle_teleport_cords(event)
         local destination_surface = game.surfaces[surface_name]
 
         Teleport_to_planet_with_cords(player, destination_surface, coord_x, coord_y)
-    elseif element.name == "close_button" then
-        -- Fecha a janela ao clicar no botão "X"
-        player.gui.screen.teleport_window.destroy()
+    -- elseif element.name == "close_button" then
+    --     -- Fecha a janela ao clicar no botão "X"
+    --     player.gui.screen.teleport_window.destroy()
     end
 end

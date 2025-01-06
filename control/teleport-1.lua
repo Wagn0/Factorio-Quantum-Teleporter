@@ -22,6 +22,17 @@ script.on_init(
     end
 )
 
+-- destroi a janela quando o player morre
+script.on_event(
+    defines.events.on_player_died,
+    function(event)
+        local player = game.players[event.player_index]
+
+        player.gui.screen.teleport_window.destroy()
+    end
+)
+
+
 
 -- on_init() will run when the game starts (or in mod cases, when you add it to an existing save). It is used to initialize storage variables you will need, changing game parameters, for instance:
 
