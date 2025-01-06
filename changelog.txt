@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.2
+Date: 06/01/2025
+  Changes:
+    - add audios.
+    - add teleporter equipament and teleporter portal
+  Bugs Fixed:
+    - scripts a nul values on init
+
+---------------------------------------------------------------------------------------------------
 Version: 0.0.1
 Date: 05/01/2025
   Changes:

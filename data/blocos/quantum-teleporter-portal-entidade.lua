@@ -1,4 +1,4 @@
-local path_main = "__quantum-teleporter__/"
+local path_main = "__Quantum-Teleporter__/"
 
 data:extend({
     {

@@ -13,11 +13,11 @@ data:extend(
   {
     type = "item-subgroup",
     -- nome usado para definir o grupo dos itens
-    name = "items",
+    name = "itens",
     -- indexando o grupo a categoria
     group = "quantum-teleporter-category",
     -- ordem de A a Z e de cima para baixo para organização dos grupos "modname-name"
-    order = "quantum-teleporter-items"
+    order = "quantum-teleporter-itens"
   },
   {
     type = "item-subgroup",
