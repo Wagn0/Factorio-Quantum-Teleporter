@@ -1,6 +1,6 @@
 data:extend(
 {
--------------------------------------------------------------------------- MOD-category
+-------------------------------------------------------------------------- quantum-teleporter-category
   {
     type = "item-group",
     -- nome da categoria
@@ -22,12 +22,12 @@ data:extend(
   {
     type = "item-subgroup",
     name = "component",
-    group = "MOD-category",
-    order = "MOD-component"
+    group = "quantum-teleporter-category",
+    order = "quantum-teleporter-component"
   },
 }
 )
--------------------------------------------------------------------------- MOD-category
+-------------------------------------------------------------------------- quantum-teleporter-category
 
 -- -- categorias de receitas
 -- data:extend({

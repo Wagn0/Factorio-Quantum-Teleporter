@@ -34,10 +34,9 @@ data:extend(
                 {100.5, 100.5}
             },
             energy_source = {
-                emissions_per_minute = 30,
                 type = "electric",
                 usage_priority = "secondary-input"
-            },
+            },            
             resistances = {
                 {
                     type = "fire",

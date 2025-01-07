@@ -1,8 +1,9 @@
 -- presets Basicos do mods
 require("graficos/style.lua")
+require("data/recursos")
+require("data/technology")
 require("data/soundMaker")
 require("data/grupos")
-require("data/recursos")
 
 -- blocos e qeuipamentos
 require("data/blocos/quantum-teleporter-equipment")

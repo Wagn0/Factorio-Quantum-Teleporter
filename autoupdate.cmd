@@ -66,6 +66,7 @@ if not exist "%ZIP_FILE%" (
     exit /b 1
 )
 
+:: inicia o sistema de autogit para que seja sincronizado com o git
 start /realtime /min autogit.cmd 
 
 :: Remover espaços em branco ao redor de AUTO_SEND
