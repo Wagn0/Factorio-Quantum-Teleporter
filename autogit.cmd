@@ -49,3 +49,4 @@ git commit -m "Automated commit for %MOD_NAME% version %MOD_VERSION%"
 
 :: Envia os arquivos para o repositório remoto na branch especificada
 git push origin main
+exit 
