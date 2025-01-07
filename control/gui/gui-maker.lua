@@ -1,7 +1,14 @@
+local function add_coordinate_fields(window)
+    window.add({type = "label", caption = "Digite a coordenada X:"})
+    window.add({type = "textfield", name = "coord_x", text = "0"})
+
+    window.add({type = "label", caption = "Digite a coordenada Y:"})
+    window.add({type = "textfield", name = "coord_y", text = "0"})
+end
 
 -- Função para criar a janela com campos de entrada
-function Create_input(player)
-    local flow = player.gui.screen.add({type = "flow", direction = "vertical", name = "teleport_window"})
+local function create_input(player)
+    local flow = player.gui.screen.add({type = "flow", direction = "vertical", name = "window"})
 
     -- Título da janela
     flow.add({type = "label", caption = "Digite o nome da superfície para teletransporte:"})
@@ -13,7 +20,7 @@ function Create_input(player)
     flow.add({type = "button", name = "confirm_button", caption = "Teletransportar"})
 end
 
-function Create_input_window(player)
+local function create_input_window(player)
     local screen_gui = player.gui.screen
 
     -- Adiciona um frame para a janela, com fundo e bordas
@@ -21,7 +28,7 @@ function Create_input_window(player)
         screen_gui.add(
         {
             type = "frame",
-            name = "teleport_window",
+            name = "window",
             direction = "vertical",
             caption = "Teletransporte",
             style = "frame",
@@ -43,12 +50,7 @@ function Create_input_window(player)
     window.add({type = "label", caption = "Digite o nome da superfície para teletransporte:"})
     window.add({type = "textfield", name = "surface_name", text = ""})
 
-    -- Adiciona as coordenadas X e Y
-    window.add({type = "label", caption = "Digite a coordenada X:"})
-    window.add({type = "textfield", name = "coord_x", text = "0"})
-
-    window.add({type = "label", caption = "Digite a coordenada Y:"})
-    window.add({type = "textfield", name = "coord_y", text = "0"})
+    add_coordinate_fields(window)
 
     -- Adiciona o botão de teletransporte
     window.add({type = "button", name = "confirm_button", caption = "Teletransportar"})
@@ -56,3 +58,47 @@ function Create_input_window(player)
     -- Centraliza a janela na tela do jogador
     window.location = {x = (screen_gui.width - window.width) / 2, y = (screen_gui.height - window.height) / 2}
 end
+
+-- Função para criar a janela com fundo e botão de fechar
+local function create_teleport_window(player)
+    local screen_gui = player.gui.screen
+
+    -- Adiciona um frame para a janela, com fundo e bordas
+    local window =
+        screen_gui.add(
+        {
+            type = "frame",
+            name = "teleport_window",
+            direction = "vertical",
+            caption = "Teletransporte",
+            style = "frame",
+            visible = true
+        }
+    )
+
+    -- Adiciona a área para digitar o nome da superfície
+    window.add({type = "label", caption = "Digite o nome da superfície para teletransporte:"})
+    window.add({type = "textfield", name = "surface_name", text = ""})
+
+    add_coordinate_fields(window)
+
+    -- Adiciona o botão de teletransporte
+    window.add({type = "button", name = "confirm_button", caption = "Teletransportar"})
+
+    -- Centraliza a janela na tela do jogador
+    window.location = {x = (screen_gui.width - window.width) / 2, y = (screen_gui.height - window.height) / 2}
+end
+
+local function close_teleport_window(player)
+    if player.gui.screen.teleport_window then
+        player.gui.screen.teleport_window.destroy()
+    end
+end
+
+return {
+    create_input = create_input,
+    create_input_window = create_input_window,
+    create_teleport_window = create_teleport_window,
+    close_teleport_window = close_teleport_window,
+    add_coordinate_fields = add_coordinate_fields
+}

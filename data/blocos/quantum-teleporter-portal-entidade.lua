@@ -91,7 +91,7 @@ data:extend(
             },
             working_sound = {
                 sound = {
-                    {filename = path_main .. "/audio/portal.ogg", volume = 0.45}
+                    {filename = path_main .. "audio/portal.ogg", volume = 0.45}
                 },
                 fade_in_ticks = 4,
                 audible_distance_modifier = 0.5,

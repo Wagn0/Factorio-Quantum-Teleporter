@@ -26,7 +26,7 @@ data:extend({
         categories = {"armor"}, -- Define as categorias permitidas
         teleport_action = { -- Definição do teleporte
             type = "direct",
-            sound = { filename = path_main .. "/audio/teleport.ogg", volume = 1.0 }
+            sound = { filename = path_main .. "audio/teleport.ogg", volume = 1.0 }
         }
     }
 })
