@@ -24,7 +24,7 @@ local function crafted_teleport(event)
 
     local item_stack = event.item_stack
     if item_stack and item_stack.valid and item_stack.name == "quantum-teleporter-equipment" then
-        guimaker.create_input_window(player)
+        guimaker.create_teleport_window(player)
     end
 end
 
@@ -37,7 +37,7 @@ local function equiped_teleport(event)
 
     local equipment = event.equipment
     if equipment.name == "quantum-teleporter-equipment" then
-        guimaker.create_input_window(player)
+        guimaker.create_teleport_window(player)
     end
 end
 
@@ -48,6 +48,46 @@ local function player_died_teleport(event)
         return
     end
     guimaker.close_teleport_window(player)
+end
+
+-- teleport 2.0 
+local function teleport_cords(event)
+    local player = game.players[event.player_index]
+    local element = event.element
+
+    -- Verifica se o elemento do evento é válido
+    if not element or not element.valid then
+        game.print("ERROR FATAL! REPORT TO DEVELOPER")
+        return
+    end
+
+    if element.name == "confirm_button" then
+        local teleport_window = player.gui.screen.teleport_window
+        if not teleport_window then
+            player.print("Erro: Janela de teletransporte não encontrada.")
+            return
+        end
+
+        -- Captura a superfície selecionada no dropdown
+        local surface_dropdown = teleport_window.surface_dropdown
+        if not surface_dropdown then
+            player.print("Erro: Dropdown de superfícies não encontrado.")
+            return
+        end
+        local selected_index = surface_dropdown.selected_index
+        local surface_name = surface_dropdown.items[selected_index]
+
+        -- Captura as coordenadas
+        local coord_x = tonumber(teleport_window.coord_x.text) or 0
+        local coord_y = tonumber(teleport_window.coord_y.text) or 0
+
+        -- Realiza o teletransporte
+        if surface_name and game.surfaces[surface_name] then
+            functions.teleport_to_planet_with_cords(player, surface_name, coord_x, coord_y)
+        else
+            player.print("Erro: Superfície selecionada inválida.")
+        end
+    end
 end
 
 -- teleport 1.0
@@ -61,23 +101,6 @@ local function teleport_planet(event)
     if element.name == "confirm_button" then
         local surface_name = player.gui.screen.teleport_window.surface_name.text
         functions.Teleport_to_planet(player, surface_name)
-    end
-end
-
-local function teleport_cords(event)
-    local player = game.players[event.player_index]
-    local element = event.element
-    if not element or not element.valid then
-        game.print("ERROR FATAL! REPORT TO DEVELOPER")
-        return
-    end
-
-    if element.name == "confirm_button" then
-        local surface_name = player.gui.screen.teleport_window.surface_name.text
-        local coord_x = tonumber(player.gui.screen.teleport_window.coord_x.text) or 0
-        local coord_y = tonumber(player.gui.screen.teleport_window.coord_y.text) or 0
-
-        functions.Teleport_to_planet_with_cords(player, surface_name, coord_x, coord_y)
     end
 end
 

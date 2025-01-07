@@ -6,7 +6,7 @@ data:extend(
         {
             type = "item",
             name = "quantum-teleporter-equipment",
-            icon = path_main .. "graficos/itens/quantum-teleporter-equipment.png",
+            icon = path_main .. "graficos/itens/quantum-teleporter-equipment-128.png",
             icon_size = 128,
             subgroup = "itens",
             order = "a[quantum-teleporter-item]",
@@ -38,7 +38,7 @@ data:extend(
         {
             type = "item",
             name = "quantum-teleporter-portal",
-            icon = path_main .. "graficos/blocos/quantum-teleporter-portal.png",
+            icon = path_main .. "graficos/blocos/quantum-teleporter-portal-128.png",
             icon_size = 128,
             subgroup = "itens",
             order = "Quantum-Teleporter-itens[quantum-teleporter-portal]",

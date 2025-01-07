@@ -4,7 +4,7 @@ local handle = require("control.handle")
 local eventos = defines.events
 
 -- Evento para detectar o clique nos botões
-script.on_event(eventos.on_gui_click, functions.Handle_teleport_cords)
+script.on_event(eventos.on_gui_click, handle.teleport_cords)
 
 -- cria a janela quando o player crafita algo
 script.on_event(eventos.on_player_crafted_item, handle.crafted_teleport)

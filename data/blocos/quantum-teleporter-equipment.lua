@@ -5,7 +5,7 @@ data:extend({
         type = "movement-bonus-equipment", -- Tipo específico para modificar movimentação
         name = "quantum-teleporter-equipment",
         sprite = {
-            filename = path_main .. "graficos/itens/quantum-teleporter-equipment.png",
+            filename = path_main .. "graficos/itens/quantum-teleporter-equipment-128.png",
             width = 128,
             height = 128,
             priority = "medium"

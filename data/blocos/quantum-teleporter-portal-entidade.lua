@@ -5,7 +5,7 @@ data:extend(
         {
             type = "assembling-machine",
             name = "quantum-teleporter-portal-entidade",
-            icon = path_main .. "graficos/blocos/quantum-teleporter-portal.png",
+            icon = path_main .. "graficos/blocos/quantum-teleporter-portal-128.png",
             icon_size = 128,
             icon_mipmaps = 4,
             minable = {mining_time = 60, result = "quantum-teleporter-portal"},
@@ -22,16 +22,16 @@ data:extend(
             dying_explosion = "assembling-machine-2-explosion",
             alert_icon_shift = {-0.09375, -0.375},
             collision_box = {
-                {-80, -80},
-                {100, 100}
+                {-8, -8},
+                {10, 10}
             },
             selection_box = {
-                {-80.5, -80.5},
-                {100.5, 100.5}
+                {-8.5, -8.5},
+                {10.5, 10.5}
             },
             drawing_box = {
-                {-80.5, -80.5},
-                {100.5, 100.5}
+                {-8.5, -8.5},
+                {10.5, 10.5}
             },
             energy_source = {
                 type = "electric",
