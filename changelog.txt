@@ -3,10 +3,14 @@ Version: 0.0.4
 Date: 07/01/2025
   Changes:
     - add technology reseach.
+    - add locale 
   Bugs Fixed:
     - sound when loading sound library: __Quantum-Teleporter__/audio/portal.ogg
     - First argument must be a table or LuaEventType. stack traceback: [C]: in function 'on_event' Quantum-Teleporter__/control/teleport-2.lua:66: in main chunk 
     - Error while running event Quantum-Teleporter::on_player_crafted_item (ID 14) __Quantum-Teleporter__/control/gui/gui-maker.lua:59: attempt to perform arithmetic on field 'width' (a nil value)
+    - fixed sprites not rendering and loading
+    - fixed very large portal
+    - fixed unequippable personal equipment 
 ---------------------------------------------------------------------------------------------------
 Version: 0.0.3
 Date: 06/01/2025
