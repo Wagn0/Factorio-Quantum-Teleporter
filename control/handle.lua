@@ -1,21 +1,7 @@
 local functions = require("control.functions")
 local guimaker = require("gui.gui-maker")
 
-local function removed_teleport_equipment(event)
-    local player = game.get_player(event.player_index)
-    if not player then
-        game.print("ERROR FATAL! REPORT TO DEVELOPER")
-        return
-    end
-
-    -- Verifica se o equipamento removido é o "quantum-teleporter-equipment"
-    if event.equipment and event.equipment.name == "quantum-teleporter-equipment" then
-        guimaker.close_teleport_window(player)
-    end
-    
-end
-
-local function crafted_teleport(event)
+local function crafted_item(event)
     local player = game.players[event.player_index]
     if not player then
         game.print("ERROR FATAL! REPORT TO DEVELOPER")
@@ -24,19 +10,6 @@ local function crafted_teleport(event)
 
     local item_stack = event.item_stack
     if item_stack and item_stack.valid and item_stack.name == "quantum-teleporter-equipment" then
-        guimaker.create_teleport_window(player)
-    end
-end
-
-local function equiped_teleport(event)
-    local player = game.get_player(event.player_index)
-    if not player then
-        game.print("ERROR FATAL! REPORT TO DEVELOPER")
-        return
-    end
-
-    local equipment = event.equipment
-    if equipment.name == "quantum-teleporter-equipment" then
         guimaker.create_teleport_window(player)
     end
 end
@@ -50,14 +23,93 @@ local function player_died_teleport(event)
     guimaker.close_teleport_window(player)
 end
 
--- teleport 2.0 
+local function toggle_teleport_equipment(event)
+    local player = game.players[event.player_index]
+    local armor = player.get_inventory(defines.inventory.character_armor)[1]
+
+    if armor and armor.valid_for_read and armor.grid then
+        local grid = armor.grid
+        local has_teleporter = grid.get_contents()["quantum-teleporter-equipment"]
+
+        if has_teleporter then
+            -- Equipamento foi adicionado ou ainda está presente
+            if not player.gui.screen.teleport_window then
+                -- Cria a janela de teleporte
+                guimaker.create_teleport_window(player)
+            end
+        else
+            -- Equipamento foi removido
+            guimaker.close_teleport_window(player)
+        end
+    else
+        -- Armadura removida, remove a janela de teleporte
+        if not armor or not armor.valid_for_read then
+            guimaker.close_teleport_window(player)
+            return
+        end
+    end
+end
+
+local function check_teleport_equipment_on_respawn(event)
+    local player = game.players[event.player_index]
+
+    -- Verifica se o jogador tem uma armadura equipada
+    local armor = player.get_inventory(defines.inventory.character_armor)[1]
+    if not armor or not armor.valid_for_read then
+        -- Sem armadura ou inválida
+        guimaker.close_teleport_window(player)
+        return
+    end
+
+    -- Verifica se a armadura tem o equipamento de teletransporte
+    local grid = armor.grid
+    if not grid then
+        guimaker.close_teleport_window(player)
+        return
+    end
+
+    local has_teleporter = grid.get_contents()["quantum-teleporter-equipment"]
+    if has_teleporter then
+        -- Reativa a janela de teletransporte
+        if not player.gui.screen.teleport_window then
+            guimaker.create_teleport_window(player)
+        end
+    end
+end
+
+local function teleport_player(player, coords)
+    local armor = player.get_inventory(defines.inventory.character_armor)[1]
+    if armor and armor.valid_for_read and armor.grid then
+        local grid = armor.grid
+        local teleporter = grid.get_contents()["quantum-teleporter-equipment"]
+
+        if teleporter then
+            local energy_available = grid.available_in_batteries
+            local energy_required = 50e6 -- Energia necessária para teletransporte
+
+            if energy_available >= energy_required then
+                grid.drain_energy(energy_required) -- Consome energia
+                player.teleport(coords) -- Realiza o teletransporte
+                player.print("Teletransporte realizado!")
+            else
+                player.print("Energia insuficiente.")
+            end
+        else
+            player.print("Equipamento de teletransporte não encontrado.")
+        end
+    else
+        player.print("Nenhuma armadura equipada.")
+    end
+end
+
+-- teleport 2.0
 local function teleport_cords(event)
     local player = game.players[event.player_index]
     local element = event.element
 
     -- Verifica se o elemento do evento é válido
     if not element or not element.valid then
-        game.print("ERROR FATAL! REPORT TO DEVELOPER")
+        player.print("ERROR FATAL! REPORT TO DEVELOPER")
         return
     end
 
@@ -74,18 +126,33 @@ local function teleport_cords(event)
             player.print("Erro: Dropdown de superfícies não encontrado.")
             return
         end
-        local selected_index = surface_dropdown.selected_index
-        local surface_name = surface_dropdown.items[selected_index]
 
-        -- Captura as coordenadas
-        local coord_x = tonumber(teleport_window.coord_x.text) or 0
-        local coord_y = tonumber(teleport_window.coord_y.text) or 0
+        local armor = player.get_inventory(defines.inventory.character_armor)[1]
+        if armor and armor.valid_for_read and armor.grid then
+            local grid = armor.grid
+            local teleporter = grid.get_contents()["quantum-teleporter-equipment"]
+            if teleporter then
+                local selected_index = surface_dropdown.selected_index
+                local surface_name = surface_dropdown.items[selected_index]
 
-        -- Realiza o teletransporte
-        if surface_name and game.surfaces[surface_name] then
-            functions.teleport_to_planet_with_cords(player, surface_name, coord_x, coord_y)
+                -- Captura as coordenadas
+                local coord_x = tonumber(teleport_window.coord_x.text) or 0
+                local coord_y = tonumber(teleport_window.coord_y.text) or 0
+
+                -- Realiza o teletransporte
+                local energy_available = grid.available_in_batteries
+                local energy_required = 50e6 -- Energia necessária para teletransporte
+                if energy_available >= energy_required then
+                    grid.drain_energy(energy_required) -- Consome energia
+                    functions.teleport_to_planet_with_cords(player, surface_name, coord_x, coord_y)
+                else
+                    player.print("Energia insuficiente.")
+                end
+            else
+                player.print("Equipamento de teletransporte não encontrado.")
+            end
         else
-            player.print("Erro: Superfície selecionada inválida.")
+            player.print("Nenhuma armadura equipada.")
         end
     end
 end
@@ -105,10 +172,10 @@ local function teleport_planet(event)
 end
 
 return {
-    removed_teleport_equipment = removed_teleport_equipment,
-    crafted_teleport = crafted_teleport,
-    equiped_teleport = equiped_teleport,
+    crafted_item = crafted_item,
     player_died_teleport = player_died_teleport,
     teleport_planet = teleport_planet,
-    teleport_cords = teleport_cords
+    teleport_cords = teleport_cords,
+    toggle_teleport_equipment = toggle_teleport_equipment,
+    check_teleport_equipment_on_respawn = check_teleport_equipment_on_respawn
 }

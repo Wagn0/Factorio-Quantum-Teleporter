@@ -123,7 +123,7 @@ data:extend(
                 layers = {
                     {
                         frame_count = 1,
-                        filename = path_main .. "graficos/blocos/quantum-teleporter-portal.png",
+                        filename = path_main .. "graficos/blocos/quantum-teleporter-portal-128.png",
                         hr_version = {
                             frame_count = 1,
                             filename = "__base__/graphics/entity/assembling-machine-2/hr-assembling-machine-2.png",

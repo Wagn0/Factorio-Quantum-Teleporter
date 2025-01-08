@@ -1,3 +1,8 @@
+local functions = require("control.functions")
+local handle = require("control.handle")
+local eventos = defines.events
+
+
 script.on_event(defines.events.on_tick, function(event)
     for _, player in pairs(game.connected_players) do
         local character = player.character

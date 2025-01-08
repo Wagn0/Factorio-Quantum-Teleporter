@@ -2,7 +2,7 @@ local path_main = "__Quantum-Teleporter__/"
 
 data:extend({
     {
-        type = "movement-bonus-equipment", -- Tipo específico para modificar movimentação
+        type = "active-defense-equipment", -- Equipamento compatível com armadura vanilla
         name = "quantum-teleporter-equipment",
         sprite = {
             filename = path_main .. "graficos/itens/quantum-teleporter-equipment-128.png",
@@ -11,22 +11,35 @@ data:extend({
             priority = "medium"
         },
         shape = {
-            type = "full", -- Forma do equipamento
-            width = 2, -- Tamanho na grade (2x2)
+            type = "full",
+            width = 2,
             height = 2
         },
         energy_source = {
             type = "electric",
-            buffer_capacity = "112MW", -- Capacidade de energia do equipamento
-            input_flow_limit = "112MW", -- Taxa de recarga
+            buffer_capacity = "112MW", -- Energia máxima armazenada
+            input_flow_limit = "112MW", -- Velocidade de recarga
             usage_priority = "secondary-input"
         },
-        energy_consumption = "112MW", -- Consumo de energia por uso
-        movement_bonus = 0, -- Nenhum bônus de movimento, é apenas teleporte
-        categories = {"armor"}, -- Define as categorias permitidas
-        teleport_action = { -- Definição do teleporte
-            type = "direct",
-            sound = { filename = path_main .. "audio/teleport.ogg", volume = 1.0 }
-        }
+        attack_parameters = { 
+            -- Desativa ataques, mas mantém o consumo de energia
+            type = "projectile",
+            -- Altamente ineficiente para evitar uso automático
+            cooldown = 9999999, 
+            range = 0,
+            ammo_type = {
+                category = "bullet",
+                target_type = "position",
+                action = {
+                    type = "direct",
+                    action_delivery = {
+                        type = "instant",
+                        target_effects = {}
+                    }
+                }
+            }
+        },
+        -- Desativa comportamento automático
+        automatic = false
     }
 })
