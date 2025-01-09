@@ -3,7 +3,7 @@ Version: 0.0.5
 Date: 09/01/2025
   Changes:
     - add multiple stages of portal.
-    - add locale 
+    - add images of multiple stages of portal
   Bugs Fixed:
     - a
 ---------------------------------------------------------------------------------------------------
